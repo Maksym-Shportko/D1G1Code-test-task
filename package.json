@@ -1,0 +1,15 @@
+{
+  "type": "module",
+  "name": "pixi-shapes",
+  "version": "1.0.0",
+  "description": "trt",
+  "main": "index.js",
+  "scripts": {
+    "test": "run"
+  },
+  "author": "max",
+  "license": "ISC",
+  "dependencies": {
+    "pixi.js": "^5.3.3"
+  }
+}
