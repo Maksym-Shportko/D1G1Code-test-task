@@ -1,26 +1,37 @@
 import { state } from "../state.js"
+import { controller } from "../controllers/controller.js"
 
 export class Shape{
-	constructor(color,form,type){
-		this.colors = color
+	constructor(color,form,x,y) {
+		this.color = color
 		this.form = form
-		this.type = type
+		this.x = x
+		this.y = y
 	}
+	createNewShape = () =>{
+		let randomShape = new PIXI.Graphics()
+		randomShape.beginFill(state.randomColor)
+		randomShape.drawPolygon(state.randomForm)
+		randomShape.x =  state.randomPosition
+		randomShape.y =  this.y
+		randomShape.endFill()
+		randomShape.interactive = true
+		controller.app.stage.addChild(randomShape)
+
+		let moveShape = () =>{
+			requestAnimationFrame(moveShape)
+			randomShape.y += state.gravityPower
+			}
+			moveShape()
+	}
+	
 };
 
-const random = new Shape({
-	color:state.randomColor, //random color from controller
-	form:'',	// random form from controller
-	type:''	// type ?
-})
+let color = state.randomColor
+export const random = new Shape(state.randomColor,state.randomForm,state.randomPosition,100)
 
-
-
-
-
-
-
-
+// Если не передавать параментры хардкодом-то они = undefined
+// random.createNewShape.bind(controller)
 
 
 

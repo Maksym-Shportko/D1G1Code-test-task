@@ -14,51 +14,60 @@ export const controller = {
 	incrementGravityPower(){
 		return state.gravityPower ++
 	},
-	deleteShape(){
-
+	
+	deleteShape(e){
+		console.log('test')
+		return state.randomShape.destroy()
 	},
 
 	changeSameShapesColor(){
-
 	},
-	createNewShape(e){
+	createApp(){
 		const rectangleArea = document.getElementById('rectangleArea');
-		const app = new PIXI.Application({
+
+		this.app = new PIXI.Application({
 			view:rectangleArea,
 			height:window.innerHeight,
 			width:window.innerWidth
 		});
+	},
+	createNewShape(e){
 		let randomShape = new PIXI.Graphics()
 		randomShape.beginFill(state.randomColor)
 		randomShape.drawPolygon(state.randomForm)
-		randomShape.x = e.screenX 
-		randomShape.y = e.screenY
+		randomShape.x =  e.x
+		randomShape.y =  e.y
 		randomShape.endFill()
 		randomShape.interactive = true
 
-		app.stage.addChild(randomShape)
+		this.app.stage.addChild(randomShape)
 
-		let	getRandomColor = () =>{
-			const colors = state.colors
-			 let randomColor = Math.floor(Math.random()*colors.length)
-			state.randomColor = colors[randomColor] 
-			 return colors[randomColor]
-		}
-		getRandomColor()
-		
-		let createRandomShape=()=>{
-			const forms = state.forms
-			let randomForm = Math.floor(Math.random()*forms.length)
-			 state.randomForm = forms[randomForm] 
-			return forms[randomForm]
-		}
-		createRandomShape()
+		this.getRandomColor()
+		this.createRandomShape()
 
-		let mooveShape = () =>{
-			requestAnimationFrame(mooveShape)
+		let moveShape = () =>{
+			requestAnimationFrame(moveShape)
 			randomShape.y += state.gravityPower
 			}
-			mooveShape()
+			moveShape()
+	},
+	getRandomColor(){
+		const colors = state.colors
+		 let randomColor = Math.floor(Math.random()*colors.length)
+		state.randomColor = colors[randomColor] 
+		 return colors[randomColor]
+	},
+	createRandomShape(){
+		const forms = state.forms
+		let randomForm = Math.floor(Math.random()*forms.length)
+		 state.randomForm = forms[randomForm] 
+		return forms[randomForm]
+	},
+	getRandomPosition(min,max){
+		let position = min + Math.random() * (max-min)
+		state.randomPosition = Math.floor(position) 
+		return Math.floor(position)
 	}
+	
 
 }
